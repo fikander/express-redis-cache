@@ -29,7 +29,7 @@
 
   /** Emulate res **/
   var resTemplate = {
-    statusCode: 200,
+    statusCode: 201,
     send: function (body) {
 
     },
@@ -97,19 +97,26 @@
 
       describe ( 'cache entry', function () {
 
-        it ( 'should be have a property "body" which is a string and equals the sent text', function () {
+        it ( 'should have a property "body" which is a string and equals the sent text', function () {
           results.forEach(function (entry) {
             entry.should.have.property('body').which.is.a.String();
             entry.body.should.equal('hello folks!');
           });
         });
 
-        it ( 'should be have a property "type" which is a string and equals the sent type', function () {
+        it ( 'should have a property "type" which is a string and equals the sent type', function () {
           results.forEach(function (entry) {
             entry.should.have.property('type').which.is.a.String();
             entry.type.should.equal(res._headers['content-type']);
           });
         });
+
+        it ( 'should have a property "status" which is a string equal to response status', function () {
+          results.forEach(function (entry) {
+            entry.should.have.property('status').which.is.a.String();
+            entry.status.should.equal('' + res.statusCode);
+          })
+        })
 
         it ( ' - entry which has a property touched which is a number which, when resolved to date, is less than 2 seconds from now', function () {
           results.forEach(function (entry) {
